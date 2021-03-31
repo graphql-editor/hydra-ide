@@ -15,6 +15,7 @@ export interface HydraIDEProps {
   value: string;
   setValue: (value: string) => void;
   theme: monaco.editor.IStandaloneThemeData;
+  depsToObserveForResize?: React.DependencyList;
 }
 
 const HydraIDE = ({
@@ -24,6 +25,7 @@ const HydraIDE = ({
   setValue,
   style = {},
   value,
+  depsToObserveForResize = [],
 }: HydraIDEProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [monacoInstance, setMonacoInstance] = useState<
@@ -32,6 +34,9 @@ const HydraIDE = ({
   const [monacoSubscription, setMonacoSubscription] = useState<
     monaco.IDisposable
   >();
+  useLayoutEffect(() => {
+    monacoInstance?.layout();
+  }, depsToObserveForResize);
   useEffect(() => {
     monacoInstance?.setValue(value);
   }, []);
