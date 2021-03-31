@@ -28,36 +28,29 @@ const HydraIDE = ({
   depsToObserveForResize = [],
 }: HydraIDEProps) => {
   const ref = useRef<HTMLDivElement>(null);
+
   const [monacoInstance, setMonacoInstance] = useState<
     monaco.editor.IStandaloneCodeEditor
   >();
+
   const [monacoSubscription, setMonacoSubscription] = useState<
     monaco.IDisposable
   >();
+
   useLayoutEffect(() => {
     monacoInstance?.layout();
   }, depsToObserveForResize);
+
   useEffect(() => {
     monacoInstance?.setValue(value);
   }, []);
+
   useEffect(() => {
     return () => {
       monacoInstance?.dispose();
       monacoSubscription?.dispose();
     };
   }, [monacoInstance, monacoSubscription]);
-
-  useEffect(() => {
-    const keyListener = (e: KeyboardEvent) => {
-      if (e.ctrlKey || e.metaKey) {
-        if (e.key === 's') {
-          e.preventDefault();
-        }
-      }
-    };
-    document.addEventListener('keydown', keyListener);
-    return () => document.removeEventListener('keydown', keyListener);
-  }, []);
 
   useEffect(() => {
     monaco.editor.defineTheme('theme', theme);
@@ -82,10 +75,8 @@ const HydraIDE = ({
     });
     setMonacoInstance(m);
     setMonacoSubscription(subscription);
+    console.log('SETT');
   }, [theme, editorOptions]);
-  useLayoutEffect(() => {
-    monacoInstance?.layout();
-  }, [monacoInstance]);
 
   return (
     <>

@@ -14,11 +14,9 @@ export const Main = () => {
 
   return (
     <HydraIDE
-      editorOptions={{
-        ...Config,
-      }}
+      editorOptions={Config}
       theme={JsTheme}
-      setValue={setValue}
+      setValue={(v) => setValue(v)}
       value={value}
       depsToObserveForResize={[windowWidth]}
     />
