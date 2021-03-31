@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { initialValues } from './initial';
-import HydraIDE from '@/HydraIDE';
-import { Config } from '@/../sandbox/Config';
-import { JsTheme } from '@/../sandbox/themes';
+import HydraIDE from '@/index';
+import { Config } from './Config';
+import { JsTheme } from './themes';
 export const Main = () => {
   const [value, setValue] = useState(initialValues.js);
 

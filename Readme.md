@@ -41,7 +41,7 @@ You can check exact webpack configuration in `sandbox` folder.
 
 ```tsx
 import React, { useState } from 'react';
-import HydraIDE from '@/HydraIDE';
+import HydraIDE from 'hydra-ide';
 import { darken, lighten, toHex } from 'color2k';
 
 export const Colors = {
