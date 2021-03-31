@@ -7,15 +7,13 @@ export const Main = () => {
   const [value, setValue] = useState(initialValues.js);
 
   return (
-    <div style={{ height: `100%`, width: '100%' }}>
-      <HydraIDE
-        editorOptions={{
-          ...Config,
-        }}
-        theme={JsTheme}
-        setValue={setValue}
-        value={value}
-      />
-    </div>
+    <HydraIDE
+      editorOptions={{
+        ...Config,
+      }}
+      theme={JsTheme}
+      setValue={setValue}
+      value={value}
+    />
   );
 };

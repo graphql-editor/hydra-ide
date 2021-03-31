@@ -1,9 +1,10 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useLayoutEffect } from 'react';
 import * as monaco from 'monaco-editor';
 import { EditorRestyle } from './styles/editor';
 
 export interface HydraIDEProps {
   className?: string;
+  style?: React.CSSProperties;
   editorOptions?: monaco.editor.IStandaloneEditorConstructionOptions &
     Omit<
       Required<
@@ -21,6 +22,7 @@ const HydraIDE = ({
   editorOptions,
   theme,
   setValue,
+  style = {},
   value,
 }: HydraIDEProps) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -30,7 +32,6 @@ const HydraIDE = ({
   const [monacoSubscription, setMonacoSubscription] = useState<
     monaco.IDisposable
   >();
-
   useEffect(() => {
     monacoInstance?.setValue(value);
   }, []);
@@ -56,6 +57,9 @@ const HydraIDE = ({
   useEffect(() => {
     resetEditor();
   }, []);
+  useLayoutEffect(() => {
+    monacoInstance?.layout();
+  }, [monacoInstance]);
 
   const resetEditor = () => {
     monaco.editor.defineTheme('theme', theme);
@@ -64,6 +68,7 @@ const HydraIDE = ({
       value,
       theme: 'theme',
     });
+    m.layout();
     monaco.editor.remeasureFonts();
     monacoSubscription?.dispose();
     monacoInstance?.getModel()?.dispose();
@@ -83,7 +88,16 @@ const HydraIDE = ({
 
   return (
     <>
-      <div className={className} ref={ref}></div>
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          overflow: 'hidden',
+          ...style,
+        }}
+        className={className}
+        ref={ref}
+      ></div>
       <style>{EditorRestyle}</style>
     </>
   );

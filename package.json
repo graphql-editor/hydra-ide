@@ -1,10 +1,10 @@
 {
   "name": "hydra-ide",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Monaco Editor for React with some super powers",
   "main": "lib/index.js",
   "scripts": {
-    "start": "webpack-dev-server --config ./sandbox/webpack.config.js --content-base ./sandbox/ --port 1456 --hot --inline --open",
+    "start": "webpack-dev-server --config ./sandbox/webpack.config.js --content-base ./sandbox/ --port 1457 --hot --inline --open",
     "build": "ttsc --build tsconfig.build.json",
     "watch": "ttsc --watch --project tsconfig.build.json"
   },

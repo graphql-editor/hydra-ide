@@ -12,3 +12,5 @@ examples
 package-lock.json
 __tests__
 examples
+.tsconfig.json
+.tsconfig.build.json
