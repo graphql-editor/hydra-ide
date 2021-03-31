@@ -55,13 +55,6 @@ const HydraIDE = ({
   }, []);
 
   useEffect(() => {
-    resetEditor();
-  }, []);
-  useLayoutEffect(() => {
-    monacoInstance?.layout();
-  }, [monacoInstance]);
-
-  const resetEditor = () => {
     monaco.editor.defineTheme('theme', theme);
     const m = monaco.editor.create(ref.current!, {
       ...editorOptions,
@@ -84,7 +77,10 @@ const HydraIDE = ({
     });
     setMonacoInstance(m);
     setMonacoSubscription(subscription);
-  };
+  }, [theme, editorOptions]);
+  useLayoutEffect(() => {
+    monacoInstance?.layout();
+  }, [monacoInstance]);
 
   return (
     <>
