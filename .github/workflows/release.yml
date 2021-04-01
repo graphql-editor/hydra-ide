@@ -3,6 +3,18 @@ on:
     branches:
       - main
 jobs:
+  chrome:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Chrome
+        uses: cypress-io/github-action@v2
+        timeout-minutes: 10
+        with:
+          build: npm run build
+          start: npm start
+          browser: chrome
   build:
     runs-on: ubuntu-latest
     steps:
@@ -13,6 +25,7 @@ jobs:
           node-version: '12.x'
           registry-url: 'https://registry.npmjs.org'
       - run: npm install
+      - run: npm run ci:test
       - run: npm run build
       - run: npm publish --access public --tag latest
         env:

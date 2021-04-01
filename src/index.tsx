@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState, useLayoutEffect } from 'react';
 import * as monaco from 'monaco-editor';
 import { EditorRestyle } from './styles/editor';
+import { tree } from '@/cypressTree';
 
 export interface HydraIDEProps {
   className?: string;
@@ -42,8 +43,10 @@ const HydraIDE = ({
   }, depsToObserveForResize);
 
   useEffect(() => {
-    monacoInstance?.setValue(value);
-  }, []);
+    if (value !== monacoInstance?.getModel()?.getValue()) {
+      monacoInstance?.setValue(value);
+    }
+  }, [value, monacoInstance]);
 
   useEffect(() => {
     return () => {
@@ -75,7 +78,6 @@ const HydraIDE = ({
     });
     setMonacoInstance(m);
     setMonacoSubscription(subscription);
-    console.log('SETT');
   }, [theme, editorOptions]);
 
   return (
@@ -89,6 +91,7 @@ const HydraIDE = ({
         }}
         className={className}
         ref={ref}
+        data-cy={tree.tree.code}
       ></div>
       <style>{EditorRestyle}</style>
     </>
