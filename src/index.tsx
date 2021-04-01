@@ -43,8 +43,12 @@ const HydraIDE = ({
   }, depsToObserveForResize);
 
   useEffect(() => {
-    if (value !== monacoInstance?.getModel()?.getValue()) {
-      monacoInstance?.setValue(value);
+    const model = monacoInstance?.getModel();
+    if (model) {
+      const modelValue = model.getValue();
+      if (value !== modelValue) {
+        monacoInstance?.setValue(value || '');
+      }
     }
   }, [value, monacoInstance]);
 
@@ -71,7 +75,7 @@ const HydraIDE = ({
       const model = m.getModel();
       if (model) {
         const modelValue = model.getValue();
-        if (modelValue) {
+        if (value !== modelValue) {
           setValue(modelValue);
         }
       }
