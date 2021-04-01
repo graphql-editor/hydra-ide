@@ -39,6 +39,7 @@
     "__tests__",
     "generated",
     "examples",
+    "cypress",
     "sandbox",
     "livedoc",
     "commitlint.config.js"
