@@ -72,6 +72,17 @@ const HydraIDE = ({
 
   useEffect(() => {
     monaco.editor.defineTheme('theme', theme);
+    monacoInstance?.updateOptions({ theme: 'theme' });
+  }, [theme]);
+
+  useEffect(() => {
+    if (editorOptions) {
+      monacoInstance?.updateOptions(editorOptions);
+    }
+  }, [editorOptions]);
+
+  useEffect(() => {
+    monaco.editor.defineTheme('theme', theme);
     const m = monaco.editor.create(ref.current!, {
       ...editorOptions,
       value,
@@ -91,7 +102,7 @@ const HydraIDE = ({
     });
     setMonacoInstance(m);
     setMonacoSubscription(subscription);
-  }, [theme, editorOptions]);
+  }, []);
 
   return (
     <>
