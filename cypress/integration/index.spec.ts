@@ -7,11 +7,15 @@ context('Main IDE functions', () => {
     cy.visit('http://localhost:1457/');
   });
   it('allows to edit the code', () => {
+    cy.wait(500);
     cy.get(`[data-cy=${tree.tree.code}]`)
       .find('textarea')
-      .type('return `<div>Hello world</div>`')
+      .focus();
+    cy.get(`[data-cy=${tree.tree.code}]`)
+      .find('textarea')
+      .type('return `<div>Hello world</div>`', { force: true })
       .wait(100)
-      .type(`{backspace}{backspace}`);
+      .type(`{backspace}{backspace}`, { force: true });
 
     cy.get(`[data-cy=${tree.tree.code}]`)
       .find('textarea')

@@ -19,6 +19,8 @@ export interface HydraIDEProps {
   depsToObserveForResize?: React.DependencyList;
 }
 
+let blockEditorFromSettingValue = false;
+
 const HydraIDE = ({
   className = '',
   editorOptions,
@@ -43,14 +45,23 @@ const HydraIDE = ({
   }, depsToObserveForResize);
 
   useEffect(() => {
-    const model = monacoInstance?.getModel();
-    if (model) {
-      const modelValue = model.getValue();
-      if (value !== modelValue) {
-        monacoInstance?.setValue(value || '');
-      }
+    const m = monacoInstance?.getModel();
+    if (m && value !== m.getValue()) {
+      blockEditorFromSettingValue = true;
+      monacoInstance?.pushUndoStop();
+      m.pushEditOperations(
+        [],
+        [
+          {
+            range: m.getFullModelRange(),
+            text: value,
+          },
+        ],
+        () => null,
+      );
+      blockEditorFromSettingValue = false;
     }
-  }, [value, monacoInstance]);
+  }, [value]);
 
   useEffect(() => {
     return () => {
@@ -72,13 +83,11 @@ const HydraIDE = ({
     monacoInstance?.getModel()?.dispose();
     monacoInstance?.dispose();
     const subscription = m.onDidChangeModelContent(() => {
-      const model = m.getModel();
-      if (model) {
-        const modelValue = model.getValue();
-        if (value !== modelValue) {
-          setValue(modelValue);
-        }
+      if (blockEditorFromSettingValue) {
+        blockEditorFromSettingValue = false;
+        return;
       }
+      setValue(m.getModel()?.getValue() || '');
     });
     setMonacoInstance(m);
     setMonacoSubscription(subscription);
