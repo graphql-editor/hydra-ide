@@ -71,17 +71,9 @@ const HydraIDE = ({
   }, [monacoInstance, monacoSubscription]);
 
   useEffect(() => {
-    monaco.editor.defineTheme('theme', theme);
-    monacoInstance?.updateOptions({ theme: 'theme' });
-  }, [theme]);
-
-  useEffect(() => {
-    if (editorOptions) {
-      monacoInstance?.updateOptions(editorOptions);
-    }
-  }, [editorOptions]);
-
-  useEffect(() => {
+    monacoSubscription?.dispose();
+    monacoInstance?.getModel()?.dispose();
+    monacoInstance?.dispose();
     monaco.editor.defineTheme('theme', theme);
     const m = monaco.editor.create(ref.current!, {
       ...editorOptions,
@@ -90,9 +82,6 @@ const HydraIDE = ({
     });
     m.layout();
     monaco.editor.remeasureFonts();
-    monacoSubscription?.dispose();
-    monacoInstance?.getModel()?.dispose();
-    monacoInstance?.dispose();
     const subscription = m.onDidChangeModelContent(() => {
       if (blockEditorFromSettingValue) {
         blockEditorFromSettingValue = false;
@@ -102,7 +91,7 @@ const HydraIDE = ({
     });
     setMonacoInstance(m);
     setMonacoSubscription(subscription);
-  }, []);
+  }, [editorOptions, theme]);
 
   return (
     <>
