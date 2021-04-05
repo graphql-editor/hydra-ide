@@ -66,9 +66,26 @@ const HydraIDE = ({
   useEffect(() => {
     return () => {
       monacoInstance?.dispose();
+    };
+  }, [monacoInstance]);
+  useEffect(() => {
+    return () => {
       monacoSubscription?.dispose();
     };
-  }, [monacoInstance, monacoSubscription]);
+  }, [monacoSubscription]);
+
+  useEffect(() => {
+    if (monacoInstance) {
+      const subscription = monacoInstance.onDidChangeModelContent(() => {
+        if (blockEditorFromSettingValue) {
+          blockEditorFromSettingValue = false;
+          return;
+        }
+        setValue(monacoInstance.getModel()?.getValue() || '');
+      });
+      setMonacoSubscription(subscription);
+    }
+  }, [setValue]);
 
   useEffect(() => {
     monacoSubscription?.dispose();
