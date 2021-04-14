@@ -6,17 +6,15 @@ import { tree } from '@/cypressTree';
 export interface HydraIDEProps {
   className?: string;
   style?: React.CSSProperties;
-  editorOptions?: monaco.editor.IStandaloneEditorConstructionOptions &
-    Omit<
-      Required<
-        Pick<monaco.editor.IStandaloneEditorConstructionOptions, 'language'>
-      >,
-      'theme'
-    >;
+  editorOptions?: Omit<
+    monaco.editor.IStandaloneEditorConstructionOptions,
+    'theme'
+  >;
   value: string;
   setValue: (value: string) => void;
   theme: monaco.editor.IStandaloneThemeData;
   depsToObserveForResize?: React.DependencyList;
+  onMonaco?: (editor: monaco.editor.IStandaloneCodeEditor) => void;
 }
 
 let blockEditorFromSettingValue = false;
@@ -29,6 +27,7 @@ const HydraIDE = ({
   style = {},
   value,
   depsToObserveForResize = [],
+  onMonaco,
 }: HydraIDEProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -107,6 +106,7 @@ const HydraIDE = ({
       setValue(m.getModel()?.getValue() || '');
     });
     setMonacoInstance(m);
+    onMonaco?.(m);
     setMonacoSubscription(subscription);
   }, [editorOptions, theme]);
 

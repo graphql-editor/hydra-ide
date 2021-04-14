@@ -1,6 +1,6 @@
 {
   "name": "hydra-ide",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Monaco Editor for React with some super powers",
   "main": "lib/index.js",
   "scripts": {
