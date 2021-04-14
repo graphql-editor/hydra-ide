@@ -41,15 +41,16 @@ You can check exact webpack configuration in `sandbox` folder.
 
 ### React Element Props
 
-| Property               | type                                               | required | Description                                                                    |
-| ---------------------- | -------------------------------------------------- | -------- | ------------------------------------------------------------------------------ |
-| value                  | string                                             | true     | current code as string                                                         |
-| setValue               | (value:string) => void                             | true     | triggered when editor sets the value                                           |
-| className              | string                                             | false    | class name                                                                     |
-| style                  | React.CSSProperties                                | false    | style properties                                                               |
-| theme                  | monaco.editor.IStandaloneThemeData                 | true     | monaco editor theme                                                            |
-| editorOptions          | monaco.editor.IStandaloneEditorConstructionOptions | true     | monaco editor options                                                          |
-| depsToObserveForResize | React.DependencyList                               | false    | dependency list same as in useEffect hook. Used to automatically resize editor |
+| Property               | type                                                   | required | Description                                                                    |
+| ---------------------- | ------------------------------------------------------ | -------- | ------------------------------------------------------------------------------ |
+| value                  | string                                                 | true     | current code as string                                                         |
+| setValue               | (value:string) => void                                 | true     | triggered when editor sets the value                                           |
+| className              | string                                                 | false    | class name                                                                     |
+| style                  | React.CSSProperties                                    | false    | style properties                                                               |
+| theme                  | monaco.editor.IStandaloneThemeData                     | true     | monaco editor theme                                                            |
+| editorOptions          | monaco.editor.IStandaloneEditorConstructionOptions     | true     | monaco editor options                                                          |
+| depsToObserveForResize | React.DependencyList                                   | false    | dependency list same as in useEffect hook. Used to automatically resize editor |
+| onMonaco               | (editor: monaco.editor.IStandaloneCodeEditor) => void; | false    | when monaco is mounted it will be passed here                                  |
 
 ```tsx
 import React, { useState } from 'react';
