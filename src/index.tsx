@@ -12,6 +12,7 @@ export interface HydraIDEProps {
   >;
   value: string;
   setValue: (value: string) => void;
+  setValueOnBlur?: (value: string) => void;
   theme: monaco.editor.IStandaloneThemeData;
   depsToObserveForResize?: React.DependencyList;
   onMonaco?: (editor: monaco.editor.IStandaloneCodeEditor) => void;
@@ -28,6 +29,7 @@ const HydraIDE = ({
   value,
   depsToObserveForResize = [],
   onMonaco,
+  setValueOnBlur,
 }: HydraIDEProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -36,6 +38,10 @@ const HydraIDE = ({
   >();
 
   const [monacoSubscription, setMonacoSubscription] = useState<
+    monaco.IDisposable
+  >();
+
+  const [monacoBlurSubscription, setMonacoBlurSubscription] = useState<
     monaco.IDisposable
   >();
 
@@ -67,12 +73,12 @@ const HydraIDE = ({
       monacoInstance?.dispose();
     };
   }, [monacoInstance]);
+
   useEffect(() => {
     return () => {
       monacoSubscription?.dispose();
     };
   }, [monacoSubscription]);
-
   useEffect(() => {
     if (monacoInstance) {
       const subscription = monacoInstance.onDidChangeModelContent(() => {
@@ -85,6 +91,20 @@ const HydraIDE = ({
       setMonacoSubscription(subscription);
     }
   }, [setValue]);
+
+  useEffect(() => {
+    return () => {
+      monacoBlurSubscription?.dispose();
+    };
+  }, [monacoBlurSubscription]);
+  useEffect(() => {
+    if (monacoInstance && setValueOnBlur) {
+      const subscription = monacoInstance.onDidBlurEditorText(() => {
+        setValue(monacoInstance.getValue() || '');
+      });
+      setMonacoBlurSubscription(subscription);
+    }
+  }, [setValueOnBlur]);
 
   useEffect(() => {
     monacoSubscription?.dispose();

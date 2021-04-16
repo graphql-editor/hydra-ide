@@ -1,6 +1,6 @@
 # Hydra IDE
 
-Hydra IDE is simplified code IDE component based on monaco editor for React apps. It has no dependencies as you have to install them yourself inside your project
+Hydra IDE is simplified code IDE component based on monaco editor for React apps. It has no dependencies as you have to install them yourself inside your project.
 
 ## Installation in React project
 
@@ -45,6 +45,7 @@ You can check exact webpack configuration in `sandbox` folder.
 | ---------------------- | ------------------------------------------------------ | -------- | ------------------------------------------------------------------------------ |
 | value                  | string                                                 | true     | current code as string                                                         |
 | setValue               | (value:string) => void                                 | true     | triggered when editor sets the value                                           |
+| setValueOnBlur         | (value:string) => void                                 | false    | triggered when editor sets the value on blur                                   |
 | className              | string                                                 | false    | class name                                                                     |
 | style                  | React.CSSProperties                                    | false    | style properties                                                               |
 | theme                  | monaco.editor.IStandaloneThemeData                     | true     | monaco editor theme                                                            |
