@@ -86,17 +86,18 @@ const HydraIDE = ({
           blockEditorFromSettingValue = false;
           return;
         }
-        setValue(monacoInstance.getModel()?.getValue() || '');
+        setValue(monacoInstance.getValue() || '');
       });
       setMonacoSubscription(subscription);
     }
-  }, [setValue]);
+  }, [setValue, monacoInstance]);
 
   useEffect(() => {
     return () => {
       monacoBlurSubscription?.dispose();
     };
   }, [monacoBlurSubscription]);
+
   useEffect(() => {
     if (monacoInstance && setValueOnBlur) {
       const subscription = monacoInstance.onDidBlurEditorText(() => {
@@ -104,7 +105,7 @@ const HydraIDE = ({
       });
       setMonacoBlurSubscription(subscription);
     }
-  }, [setValueOnBlur]);
+  }, [setValueOnBlur, monacoInstance]);
 
   useEffect(() => {
     monacoSubscription?.dispose();
