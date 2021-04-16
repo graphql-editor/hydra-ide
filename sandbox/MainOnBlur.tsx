@@ -17,6 +17,7 @@ export const Main = () => {
       theme={JsTheme}
       setValue={(v) => {}}
       setValueOnBlur={(v) => {
+        console.log('ONBLUR');
         setValue(v);
       }}
       value={value}

@@ -71,16 +71,14 @@ const HydraIDE = ({
   useEffect(() => {
     return () => {
       monacoInstance?.dispose();
+      monacoSubscription?.dispose();
+      monacoBlurSubscription?.dispose();
     };
   }, [monacoInstance]);
 
   useEffect(() => {
-    return () => {
-      monacoSubscription?.dispose();
-    };
-  }, [monacoSubscription]);
-  useEffect(() => {
     if (monacoInstance) {
+      monacoSubscription?.dispose();
       const subscription = monacoInstance.onDidChangeModelContent(() => {
         if (blockEditorFromSettingValue) {
           blockEditorFromSettingValue = false;
@@ -93,15 +91,10 @@ const HydraIDE = ({
   }, [setValue, monacoInstance]);
 
   useEffect(() => {
-    return () => {
-      monacoBlurSubscription?.dispose();
-    };
-  }, [monacoBlurSubscription]);
-
-  useEffect(() => {
     if (monacoInstance && setValueOnBlur) {
+      monacoBlurSubscription?.dispose();
       const subscription = monacoInstance.onDidBlurEditorText(() => {
-        setValue(monacoInstance.getValue() || '');
+        setValueOnBlur(monacoInstance.getValue() || '');
       });
       setMonacoBlurSubscription(subscription);
     }
