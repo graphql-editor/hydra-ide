@@ -1,6 +1,6 @@
 {
   "name": "hydra-ide",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Monaco Editor for React with some super powers",
   "main": "lib/index.js",
   "scripts": {
@@ -33,7 +33,7 @@
     "worker-loader": ">=2.0.0",
     "file-loader": ">=5.0.2",
     "css-loader": ">=2.1.1",
-    "webpack": "^4.41.2"
+    "webpack": ">=4.41.2"
   },
   "devDependencies": {
     "@types/react": "^16.9.14",
